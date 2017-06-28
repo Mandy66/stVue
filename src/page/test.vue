@@ -4,13 +4,16 @@
         <img src='../assets/img/avator.jpg' class="hidden">
         <img src='../assets/img/1-1.jpg' class="hidden">
         <div class="login_page fillcontain">
-            <modal :config="{name: 'test', title: 'test', picture: {src: src, width: 200, height: 100}}"></modal>
+            <modal :config="{type: '', name: 'test', title: 'test'}">
+                <picture :config="{src: src, width: 200, height: 100}"></picture>
+            </modal>
         </div>
     </div>
 </template>
 
 <script>
 import modal from '../components/modal'
+import picture from '../components/picture'
 
 export default {
     data() {
@@ -19,7 +22,8 @@ export default {
         }
     },
     components: {
-        modal
+        modal,
+        picture
     },
     methods: {
         switchSrc() {

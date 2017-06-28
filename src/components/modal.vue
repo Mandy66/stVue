@@ -1,8 +1,8 @@
 <template>
     <div>
-        <el-button type="text" @click="dialogVisible = true">{{config.name}}</el-button>
+        <el-button :type="config.type" @click="dialogVisible = true">{{config.name}}</el-button>
         <el-dialog :title="config.title" :visible.sync="dialogVisible" size="tiny" :before-close="handleClose">
-            <picture :config="config.picture"></picture>
+            <slot></slot>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -13,15 +13,14 @@
 
 
 <script>
-import Picture from './picture'
 export default {
     props: {
         'config': {
             default: function () {
                 return {
-                    name: '点击打开 Dialog',
-                    title: '提示',
-                    visible: false
+                    type: 'text',
+                    name: '点击打开',
+                    title: '提示'
                 }
             }
         }
@@ -30,9 +29,6 @@ export default {
         return {
             dialogVisible: false
         };
-    },
-    components: {
-        Picture
     },
     methods: {
         handleClose(done) {

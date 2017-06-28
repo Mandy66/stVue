@@ -1,5 +1,5 @@
 <template>
-    <img class="image">
+    <img>
 </template>
 
 <script>
@@ -25,14 +25,8 @@ export default {
 </script>
 
 <style lang="less">
-// .image {
-//     display: block;
-//     margin: 0 auto;
-//     width: 100%;
-// }
 img {
     display: block;
     margin: 0 auto;
-    width: 100%;
 }
 </style>
