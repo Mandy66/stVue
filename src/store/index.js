@@ -8,6 +8,11 @@ const state = {
 	adminInfo: {
 		avatar: 'default.jpg'
 	},
+    status: {
+	    path: '/',
+        tempJson: {},
+        tempStr: ''
+    }
 }
 
 const mutations = {
