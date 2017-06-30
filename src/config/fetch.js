@@ -28,7 +28,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch', define
 			},
 			mode: "cors",
 			cache: "force-cache"
-		}
+		};
 
 		if (type == 'POST') {
 			Object.defineProperty(requestConfig, 'body', {

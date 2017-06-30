@@ -6,12 +6,19 @@ Vue.use(Vuex)
 
 const state = {
 	adminInfo: {
-		avatar: 'default.jpg'
+		avatar: ''
 	},
     status: {
+	    name: '',
+        //用于存储倒入数据时路径的变化
 	    path: '/',
+        //用于存储查看脚本的详细信息
         tempJson: {},
         tempStr: ''
+    },
+    user:{
+        user_name: '',
+        user_img: ''
     }
 }
 

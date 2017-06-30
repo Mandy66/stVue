@@ -1,46 +1,31 @@
 <template>
 	<div class="manage_page fillcontain">
 		<el-row style="height: 100%;">
-	  		<el-col :span="4"  style="min-height: 100%; ">
-                <div class="bigTitle"><i style="text-indent: 10%" class="el-icon-minus"></i><i class="bigText">中科视拓</i></div>
-				<el-menu :default-active="defaultActive" style="min-height: 100%;background-color: white;color: black" router>
-					<el-menu-item index="manage">首页</el-menu-item>
-                    <el-menu-item index="importData">导入数据</el-menu-item>
-					<!--<el-submenu index="2">-->
-						<!--<template slot="title"><i class="el-icon-document"></i>数据管理</template>-->
-						<!--<el-menu-item index="userList">用户列表</el-menu-item>-->
-						<!--<el-menu-item index="shopList">商家列表</el-menu-item>-->
-						<!--<el-menu-item index="foodList">食品列表</el-menu-item>-->
-						<!--<el-menu-item index="orderList">订单列表</el-menu-item>-->
-						<!--<el-menu-item index="adminList">管理员列表</el-menu-item>-->
-					<!--</el-submenu>-->
-					<!--<el-submenu index="3">-->
-						<!--<template slot="title"><i class="el-icon-plus"></i>添加数据</template>-->
-						<!--<el-menu-item index="addShop">添加商铺</el-menu-item>-->
-						<!--<el-menu-item index="addGoods">添加商品</el-menu-item>-->
-					<!--</el-submenu>-->
-					<!--<el-submenu index="4">-->
-						<!--<template slot="title"><i class="el-icon-star-on"></i>图表</template>-->
-						<!--<el-menu-item index="visitor">用户分布</el-menu-item>-->
-						<!--&lt;!&ndash; <el-menu-item index="newMember">用户数据</el-menu-item> &ndash;&gt;-->
-					<!--</el-submenu>-->
-					<!--<el-submenu index="5">-->
-						<!--<template slot="title"><i class="el-icon-edit"></i>编辑</template>-->
-						<!--&lt;!&ndash; <el-menu-item index="uploadImg">上传图片</el-menu-item> &ndash;&gt;-->
-						<!--<el-menu-item index="vueEdit">文本编辑</el-menu-item>-->
-					<!--</el-submenu>-->
-					<!--<el-submenu index="6">-->
-						<!--<template slot="title"><i class="el-icon-setting"></i>设置</template>-->
-						<!--<el-menu-item index="adminSet">管理员设置</el-menu-item>-->
-						<!--&lt;!&ndash; <el-menu-item index="sendMessage">发送通知</el-menu-item> &ndash;&gt;-->
-					<!--</el-submenu>-->
-					<!--<el-submenu index="7">-->
-						<!--<template slot="title"><i class="el-icon-warning"></i>说明</template>-->
-						<!--<el-menu-item index="explain">说明</el-menu-item>-->
-					<!--</el-submenu>-->
+            <el-col :span="24" style="height: 80px;top: 0;position: relative">
+                <a href="javascript:void(0)" style="position: absolute;left: 30px;top: 28px;"> <i class="iconfont headIcon icon-caidan"></i></a>
+                <img src="../assets/img/biglogo.png" alt="" style="position: absolute;left: 50%;margin-left: -162px;height: 80px;bottom:0">
+                <el-menu class="el-menu-demo" mode="horizontal" style="background-color: white;position: absolute;right: 60px;top: 10px;" @select="handleSelect">
+                    <i class="el-icon-message" style="font-size: 24px;line-height: 60px;float: left;color: #90a4ae;padding-right: 80px;"></i>
+                    <el-dropdown @command="handleCommand" menu-align='start' style="float: left">
+                        <img :src="user.user_img" class="avator" >
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="home">首页</el-dropdown-item>
+                            <el-dropdown-item command="singout">退出</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                    <el-submenu index="2" style="font-size: 24px">
+                        <template slot="title">hello,{{user.user_name}}</template>
+                        <el-menu-item index="2-1" command="singout">退出登录</el-menu-item>
+                    </el-submenu>
+                </el-menu>
+            </el-col>
+	  		<el-col :span="4"  class="holeSiteColor" style="height: 100%">
+				<el-menu :default-active="defaultActive" class="ManageSlideBar holeSiteColor" router>
+					<el-menu-item style="padding: 0 30px 0 30px!important;" index="manage"><i class="iconfont icon-jiqixuexi iconCss"></i>首页</el-menu-item>
+                    <el-menu-item style="padding: 0 30px 0 30px!important;" index="importData"><i class="iconfont icon-daoru iconCss" style="font-size: 17px!important;"></i>导入数据</el-menu-item>
 				</el-menu>
 			</el-col>
-			<el-col :span="20" style="height: 100%;overflow: auto;">
+			<el-col :span="20" class="bodyContainer">
 				<keep-alive>
 				    <router-view></router-view>
 				</keep-alive>
@@ -50,20 +35,65 @@
 </template>
 
 <script>
+    import {signout} from '@/api/getData'
+    import {baseImgPath} from '@/config/env'
+    import {mapActions, mapState} from 'vuex'
+
     export default {
-		computed: {
-			defaultActive: function(){
-				return this.$route.path.replace('/', '');
-			}
-		},
+        data(){
+            return {
+                baseImgPath,
+                firstPage : ['导入数据'],
+            }
+        },
+        created(){
+
+        },
+        computed: {
+            ...mapState(['user']),
+            defaultActive: function(){
+                return this.$route.path.replace('/', '');
+            }
+        },
+        activated(){
+
+        },
+        methods: {
+            ...mapActions(['getAdminData']),
+            async handleCommand(command) {
+                if (command == 'home') {
+                    this.$router.push('/manage');
+                }else if(command == 'singout'){
+                    const res = await signout()
+                    if (res.status == 1) {
+                        this.$message({
+                            type: 'success',
+                            message: '退出成功'
+                        });
+                        this.$router.push('/');
+                    }else{
+                        this.$message({
+                            type: 'error',
+                            message: res.message
+                        });
+                    }
+                }
+            },
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            },
+        },
+        mounted(){
+        }
     }
 </script>
 
 
 <style lang="less" scoped>
 	@import '../style/mixin';
+    @import "../style/iconfont.css";
 	.manage_page{
-
+        background-color: white;
 	}
     .el-menu-item{
         text-indent: 5px;
@@ -73,18 +103,25 @@
         text-indent: 0;
         border-left: 5px #20a0ff solid;
     }
-    .bigTitle{
-        height: 60px;
-        width: 100%;
-        font-size: large;
-        background-color: #20a0ff;
-        color: white;
+    .avator{
+        .wh(60px, 60px);
+        border-radius: 50%;
     }
-    .bigText{
-        line-height: 60px;
+    .el-dropdown-menu__item{
         text-align: center;
-        font-size: larger;
-        font-weight: 500;
-        margin-left: 15%;
+    }
+    .headIcon{
+        color: #78909c;
+        font-size: 24px!important;
+    }
+    .iconCss{
+        font-size: 21px!important;
+        padding-right: 30px;
+    }
+    .el-menu-item{
+        color:#90a4ae;
+    }
+    .el-menu-item.is-active{
+        color:white
     }
 </style>

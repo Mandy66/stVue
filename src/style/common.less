@@ -48,12 +48,15 @@ textarea { -webkit-appearance: none;}
 html,body{
     height: 100%;
     width: 100%;
+    overflow: hidden;
+
     // background-color: #F5F5F5;
 }
 
 .fillcontain{
     height: 100%;
     width: 100%;
+
 }
 .clear:after{
     content: '';
@@ -101,9 +104,23 @@ html,body{
     transition: all .4s ease;
 }
 .slide-fade-leave-active {
-    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    transition: all .6s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 .slide-fade-enter, .slide-fade-leave-active {
     transform: translateX(10px);
     opacity: 0;
+}
+
+.table_container{
+    padding: 60px 60px 0 60px;
+    text-align: center;
+    min-height: 90%;
+    background-color: #fbfdfd;
+}
+.bodyContainer{
+    height: 100%;
+}
+
+.holeSiteColor{
+    background-color: #263238!important;
 }

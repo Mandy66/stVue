@@ -2,9 +2,11 @@
     <transition name="slide-fade" appear>
         <div class="fillcontain">
             <head-top></head-top>
-            <div class="table_container">
-                <div class="importTitle">
-                    上传脚本
+            <div class="table_container" >
+                <div class="importTitle" v-model="thisPath" >
+                    <div style="display: inline;float: left;width: 50%;margin: 0">{{thisPath}}</div>
+                    <div style="display: inline;float: left;width: 50%;text-align: right;margin: 0" v-if="thisPath !== '显示DEMO'" v-model="thisTime">{{thisTime}}</div>
+
                 </div>
                 <div class="displayer">
                     <div class="upRight">脚本文件</div>
@@ -34,7 +36,7 @@
         return {
             init: function (inputId, status, code) {
                 var html = prism.highlight("\n" + code, prism.languages.javascript);
-                console.log(html);
+                //console.log(html);
                 document.getElementById(inputId).innerHTML = html;
             }
         }
@@ -43,33 +45,43 @@
     export default {
         data(){
             return {
-
+                thisPath: '',
+                thisTime: '',
             }
         },
         components: {
             headTop,
         },
-        created(){
-
+        activated(){
+            console.log(this.$store.state.status.path + this.$store.state.status.tempJson.ID);
+            if(this.$store.state.status.path === '/showPyConfig'){
+            	this.thisPath = "显示DEMO";
+                this.getAndShowPy('demo');
+            }
+            else {
+            	this.thisPath = this.$store.state.status.tempJson.name;
+                this.thisTime = this.$store.state.status.tempJson.date;
+                this.getAndShowPy('watch', this.$store.state.status.tempJson.ID);
+            }
         },
         methods: {
             async getAndShowPy(status, ID){
-                let data = {};
+                var data = {};
                 if(status === "demo"){
-                    data = {posttype: 'demo'}
+                    data = {posttype: 'demo'};
                 }else if(status !== null && ID !== null){
-                    data = {posttype: 'check', ID: ID}
+                    data = {posttype: 'check', ID: ID};
                 }else {
-                    alert("无效的.py文件参数");
+                    console.log("无效的.py文件参数");
                 }
-                var list = await getInfo({posttype: 'demo'});
-                //console.log(list);
+                //console.log(data);
+                let list = await getInfo(data);
+                console.log(list);
                 hightLight.init('output1', 1, list.DATA.src);
                 hightLight.init('output2', 1, list.DATA.cfg);
             }
         },
         mounted(){
-            this.getAndShowPy('demo');
 
         }
     }
@@ -87,7 +99,7 @@
         width: 100%;
         font-size: large;
         text-align: left;
-        padding-bottom: 20px;
+        padding-bottom: 40px;
     }
     .uploader{
         width: 48%;

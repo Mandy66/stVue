@@ -1,10 +1,9 @@
 <template>
     <div class="login_page fillcontain">
-        <modal :config="{name: 'test', title: 'test', }"></modal>
         <transition name="form-fade" mode="in-out">
             <section class="form_contianer" v-show="showLogin">
                 <div class="manage_tip">
-                    <p>elm后台管理系统</p>
+                    <p>登录</p>
                 </div>
                 <el-form :model="loginForm" :rules="rules" ref="loginForm">
                     <el-form-item prop="username">
@@ -28,7 +27,7 @@
 </template>
 
 <script>
-import { login, getAdminInfo } from '@/api/getData'
+import { getLogin, getAdminInfo } from '@/api/getData'
 import { mapActions, mapState } from 'vuex'
 import modal from '../components/modal'
 
@@ -67,17 +66,17 @@ export default {
         async submitForm(formName) {
             this.$refs[formName].validate(async (valid) => {
                 if (valid) {
-                    const res = await login({ user_name: this.loginForm.username, password: this.loginForm.password })
-                    if (res.status == 1) {
+                    const res = await getLogin({posttype: 'login', name: this.loginForm.username, pawd: this.loginForm.password })
+                    if (res.error === '') {
                         this.$message({
                             type: 'success',
                             message: '登录成功'
                         });
                         this.$router.push('manage')
                     } else {
-                        this.$message({
-                            type: 'error',
-                            message: res.message
+                        this.$notify.error({
+                            title: '登陆失败',
+                            message: res.error
                         });
                     }
                 } else {
