@@ -23,7 +23,8 @@
 				<el-menu :default-active="defaultActive" class="ManageSlideBar holeSiteColor" router>
 					<el-menu-item style="padding: 0 30px 0 30px!important;" index="manage"><i class="iconfont icon-jiqixuexi iconCss"></i>首页</el-menu-item>
                     <el-menu-item style="padding: 0 30px 0 30px!important;" index="importData"><i class="iconfont icon-daoru iconCss" style="font-size: 17px!important;"></i>导入数据</el-menu-item>
-				</el-menu>
+                    <el-menu-item style="padding: 0 30px 0 30px!important;" index="dataSet"><i class="iconfont icon-wenjianjiafolder85 iconCss" ></i>数据集</el-menu-item>
+                </el-menu>
 			</el-col>
 			<el-col :span="20" class="bodyContainer">
 				<keep-alive>

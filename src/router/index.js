@@ -33,6 +33,7 @@ const explain = r => require.ensure([], () => r(require('@/page/explain')), 'exp
 const importData = r => require.ensure([], () => r(require('@/page/importData')), 'importData');
 const pyUpload = r => require.ensure([], () => r(require('@/page/pyUpload')), 'pyUpload');
 const showPyConfig = r => require.ensure([], () => r(require('@/page/showPyConfig')), 'showPyConfig');
+const dataSet = r => require.ensure([], () => r(require('@/page/dataSet')), 'dataSet');
 
 const routes = [
     {
@@ -59,6 +60,10 @@ const routes = [
             path: '/pyUpload',
             component: pyUpload,
             meta: ['导入数据', '上传脚本'],
+        },  {
+            path: '/dataSet',
+            component: dataSet,
+            meta: ['数据集'],
         }, {
             path: '/addShop',
             component: addShop,

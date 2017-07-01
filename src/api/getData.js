@@ -22,8 +22,10 @@ export const getPyList = data => fetch('http://192.168.1.194:1234/importData_Int
  */
 export const getLogin = data => fetch('http://192.168.1.194:1234/login',  data, 'POST', 'fetch', true);
 
-
-
+/**
+ * 获取数据集列表
+ */
+export const getFileInfo = data => fetch('http://192.168.1.111:8089/fileManage.php', data, 'POST', 'fetch', true);
 
 
 
