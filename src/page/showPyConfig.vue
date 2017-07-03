@@ -8,18 +8,20 @@
                     <div style="display: inline;float: left;width: 50%;text-align: right;margin: 0" v-if="thisPath !== '显示DEMO'" v-model="thisTime">{{thisTime}}</div>
 
                 </div>
-                <div class="displayer">
-                    <div class="upRight">脚本文件</div>
-                    <pre class="language-javascript" style="height: 100%;width: 100%;padding: 0;margin: 0">
-                        <code id="output1" class="language-javascript"></code>
-                    </pre>
-                </div>
+                <div class="codeContainer">
+                    <div class="displayer">
+                        <div class="upRight">脚本文件</div>
+                        <pre class="language-javascript" style="height: 100%;width: 100%;padding: 0;margin: 0">
+                            <code id="output1" class="language-javascript"></code>
+                        </pre>
+                    </div>
 
-                <div class="uploader">
-                    <div class="upRight">配置文件</div>
-                    <pre class="language-javascript" style="height: 100%;width: 100%;padding: 0;margin: 0">
-                        <code id="output2" class="language-javascript"></code>
-                    </pre>
+                    <div class="uploader">
+                        <div class="upRight">配置文件</div>
+                        <pre class="language-javascript" style="height: 100%;width: 100%;padding: 0;margin: 0">
+                            <code id="output2" class="language-javascript"></code>
+                        </pre>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,10 +103,12 @@
         text-align: left;
         padding-bottom: 40px;
     }
+    .codeContainer{
+        height:500px;
+    }
     .uploader{
         width: 47%;
         height: 500px;
-        margin-left: 5%;
         background-color: white;
         display: inline-block;
         position: relative;
@@ -112,6 +116,7 @@
     .displayer{
         width: 47%;
         height: 500px;
+        margin-right: 5%;
         background-color: white;
         display: inline-block;
         position: relative;
@@ -137,4 +142,5 @@
         line-height: 2em;
         background-color: #afddff;
     }
+    
 </style>

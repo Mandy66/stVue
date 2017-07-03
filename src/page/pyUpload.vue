@@ -177,8 +177,6 @@
     .uploader{
         width: 100%;
         height: 50%;
-        // margin-left: 4%;
-        //margin-top:30px;
         float: left;
         background-color: white;
         display: block;
