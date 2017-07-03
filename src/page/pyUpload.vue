@@ -4,7 +4,7 @@
             <head-top></head-top>
             <div class="table_container">
 
-                <div class="uploader" :style="hideStyle">
+                <div class="uploader1" :style="hideStyle">
                     <!--<div class="upRight">配置文件</div>-->
                     <el-upload
                         class="upload-demo"
@@ -26,7 +26,7 @@
                         <div class="el-upload__tip" slot="tip">只能上传.py文件</div>
                     </el-upload>
                 </div>
-                <div class="displayer" v-if="isDisplay === 0">
+                <div class="displayer1" v-if="isDisplay === 0">
                     <pre class="language-javascript displayerContainer">
                         <code id="output" class="language-javascript"></code>
                     </pre>
@@ -105,14 +105,9 @@
                 this.fullscreenLoading = true;
             },
             clearFiles(file, fileList){
-                //console.log(this.$refs.upload.name);
-                // console.log(fileList);
-                // console.log(fileList);
                 console.log(file);
                 this.isDisplay = 0;
                 this.hideStyle = {display: 'none'};
-                // $(".displayer").css("display","block");
-                // $(".uploader").css("display","none");
                 this.fileName = file.name;
                 hightLight.init(this.$refs.upload.name, 1);
                 this.uploadDisabled = true;
@@ -174,7 +169,7 @@
         text-align: left;
         padding-bottom: 20px;
     }
-    .uploader{
+    .uploader1{
         width: 100%;
         height: 50%;
         float: left;
@@ -182,7 +177,7 @@
         display: block;
         position: relative;
     }
-    .displayer{
+    .displayer1{
         width: 100%;
         float: left;
         height: 50%;

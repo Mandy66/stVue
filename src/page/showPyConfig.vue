@@ -9,14 +9,14 @@
 
                 </div>
                 <div class="codeContainer">
-                    <div class="displayer">
+                    <div class="displayerShow">
                         <div class="upRight">脚本文件</div>
                         <pre class="language-javascript" style="height: 100%;width: 100%;padding: 0;margin: 0">
                             <code id="output1" class="language-javascript"></code>
                         </pre>
                     </div>
 
-                    <div class="uploader">
+                    <div class="uploaderShow">
                         <div class="upRight">配置文件</div>
                         <pre class="language-javascript" style="height: 100%;width: 100%;padding: 0;margin: 0">
                             <code id="output2" class="language-javascript"></code>
@@ -106,14 +106,14 @@
     .codeContainer{
         height:500px;
     }
-    .uploader{
+    .uploaderShow{
         width: 47%;
         height: 500px;
         background-color: white;
         display: inline-block;
         position: relative;
     }
-    .displayer{
+    .displayerShow{
         width: 47%;
         height: 500px;
         margin-right: 5%;
