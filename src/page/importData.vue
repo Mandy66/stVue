@@ -13,7 +13,7 @@
                        :data="tableData"
                        highlight-current-row
                        stripe
-                       style="width: 100%;border: none">
+                       >
                        <!--<el-table-column-->
                        <!--type="index"-->
                        <!--width="100">-->

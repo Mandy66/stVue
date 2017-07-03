@@ -125,9 +125,6 @@
         width: 100%;
         height: 100%;
     }
-    .el-icon-upload{
-        margin-top: 40%!important;
-    }
     .uploadBut{
         margin-top: 60px;
     }

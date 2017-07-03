@@ -196,7 +196,7 @@
         border:1px dashed #74bcfd;
     }
     .el-icon-upload{
-       margin-top: 20%!important;
+       margin-top: 20% !important;
     }
     .uploadBut{
         margin-top: 60px;
