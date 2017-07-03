@@ -3,25 +3,8 @@
         <div class="fillcontain">
             <head-top></head-top>
             <div class="table_container">
-                <div class="importTitle">
-                    上传脚本
-                </div>
-                <div class="displayer">
-                    <div class="upRight" v-model="fileName">{{fileName}}</div>
-                    <pre class="language-javascript" style="height: 100%;width: 100%;padding: 0;margin: 0">
-                        <code id="output" class="language-javascript"></code>
-                    </pre>
-                    <!--<ul class="el-upload-list el-upload-list&#45;&#45;text">-->
-                        <!--<li class="el-upload-list__item">-->
-                            <!--<a class="el-upload-list__item-name">-->
-                                <!--<i class="el-icon-document"></i>-->
-                                <!--storage.py-->
-                            <!--</a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                </div>
-
-                <div class="uploader">
+               
+                <div class="uploader" v-if="isDisplay === 1">
                     <!--<div class="upRight">配置文件</div>-->
                     <el-upload
                         class="upload-demo"
@@ -37,12 +20,17 @@
                         accept=".py"
                         id="qwerqwer"
                         :action="pyUploadUrl"
-                        :disabled="uploadDisabled"
-                    >
+                        :disabled="uploadDisabled">
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                         <div class="el-upload__tip" slot="tip">只能上传.py文件</div>
                     </el-upload>
+                </div>
+                <div class="displayer" v-if="isDisplay === 0">
+                    <pre class="language-javascript displayerContainer">
+                        <code id="output" class="language-javascript"></code>
+                    </pre>
+                    <div class="upRight" v-model="fileName">{{fileName}}</div>
                 </div>
                 <el-button class="uploadBut" v-loading.fullscreen.lock="fullscreenLoading"  @click="submitUpload">上传到服务器</el-button>
             </div>
@@ -90,7 +78,8 @@
                 pyUploadUrl: '',
                 posttypeUpload: {posttype: 'upload'},
                 fullscreenLoading: false,
-                uploadDisabled: false
+                uploadDisabled: false,
+                isDisplay: 1,
             }
         },
         components: {
@@ -114,12 +103,17 @@
             },
             clearFiles(file, fileList){
                 //console.log(this.$refs.upload.name);
-                console.log(fileList);
-                console.log(fileList);
-                //console.log(file);
+                // console.log(fileList);
+                // console.log(fileList);
+                console.log(file);
+                this.isDisplay = 0;
+                // $(".displayer").css("display","block");
+                // $(".uploader").css("display","none");
                 this.fileName = file.name;
                 hightLight.init(this.$refs.upload.name, 1);
                 this.uploadDisabled = true;
+               
+                
             },
             upSuccess(response, file, fileList){
                 console.log(response);
@@ -146,6 +140,8 @@
                 console.log(file);
                 console.log(fileList);
                 this.fullscreenLoading = false;
+                // this.$store.state.status.path = '/showPyConfig';
+                // this.$router.push('/showPyConfig');
                 this.$notify.error({
                     title: '上传失败',
                     message: '未完成' + file.name + '文件的上传',
@@ -161,11 +157,12 @@
 <style lang="less">
     @import '../style/mixin';
     .table_container{
-        padding-left: 6%;
-        padding-right: 6%;
-        padding-top: 20px;
+        padding-left: 5%;
+        padding-right: 5%;
+        padding-top: 30px;
         text-align: center;
         height: 100%;
+        overflow: scroll;
     }
     .importTitle{
         width: 100%;
@@ -174,33 +171,38 @@
         padding-bottom: 20px;
     }
     .uploader{
-        width: 48%;
+        width: 100%;
         height: 50%;
-        margin-left: 4%;
+        // margin-left: 4%;
+        margin-top:30px;
         float: left;
         background-color: white;
         display: block;
         position: relative;
     }
     .displayer{
-        width: 48%;
+        width: 100%;
         float: left;
         height: 50%;
         overflow-y: scroll;
         overflow-x: scroll;
-        background-color: white;
-        display: block;
         position: relative;
+        border:1px dashed #74bcfd;
+        
     }
     .upload-demo, .el-upload, .el-upload-dragger{
         width: 100%;
         height: 100%;
+        text-align: center;
+    }
+    .el-upload-dragger{
+        border:1px dashed #74bcfd;
     }
     .el-icon-upload{
-       margin-top: 40%!important;
+       margin-top: 20%!important;
     }
     .uploadBut{
-        margin-top: 100px;
+        margin-top: 60px;
     }
     .upRight{
         position: absolute;
@@ -212,6 +214,10 @@
         z-index: 100;
         line-height: 2em;
         background-color: #afddff;
+    }
+    .displayerContainer{
+        background-color: #fff !important;
+        padding:40px;
     }
 
 </style>
