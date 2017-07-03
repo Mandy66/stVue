@@ -3,8 +3,8 @@
         <div class="fillcontain">
             <head-top></head-top>
             <div class="table_container">
-               
-                <div class="uploader" v-if="isDisplay === 1">
+
+                <div class="uploader" :style="hideStyle">
                     <!--<div class="upRight">配置文件</div>-->
                     <el-upload
                         class="upload-demo"
@@ -50,8 +50,8 @@
                 var code = '';
                 if(status === 0){
                     code = `#上传你的代码吧`;
-                    var html = prism.highlight("\n" + code, prism.languages.javascript);
-                    document.getElementById('output').innerHTML = html;
+                    //var html = prism.highlight("\n" + code, prism.languages.javascript);
+                    //document.getElementById('output').innerHTML = html;
                 }else {
                     var file = document.getElementsByName(inputId)[0].files[0];
                     if(file !== undefined){
@@ -80,6 +80,7 @@
                 fullscreenLoading: false,
                 uploadDisabled: false,
                 isDisplay: 1,
+                hideStyle: {display: ""}
             }
         },
         components: {
@@ -93,6 +94,8 @@
             this.uploadDisabled = false;
             hightLight.init('output', 0);
             this.pyUploadUrl = pyUploadUrl;
+            this.hideStyle = {display: ""}
+            this.isDisplay = 1;
         },
         methods: {
             submitUpload() {
@@ -107,13 +110,14 @@
                 // console.log(fileList);
                 console.log(file);
                 this.isDisplay = 0;
+                this.hideStyle = {display: 'none'};
                 // $(".displayer").css("display","block");
                 // $(".uploader").css("display","none");
                 this.fileName = file.name;
                 hightLight.init(this.$refs.upload.name, 1);
                 this.uploadDisabled = true;
-               
-                
+
+
             },
             upSuccess(response, file, fileList){
                 console.log(response);
@@ -128,8 +132,8 @@
                     });
                 }else{
                     this.$notify.error({
-                        title: '上传失败',
-                        message: '未完成' + file.name + '文件的上传',
+                        title: '上传'+ file.name + '失败',
+                        message: response.error,
                     });
                 }
 
@@ -174,7 +178,7 @@
         width: 100%;
         height: 50%;
         // margin-left: 4%;
-        margin-top:30px;
+        //margin-top:30px;
         float: left;
         background-color: white;
         display: block;
@@ -188,7 +192,7 @@
         overflow-x: scroll;
         position: relative;
         border:1px dashed #74bcfd;
-        
+
     }
     .upload-demo, .el-upload, .el-upload-dragger{
         width: 100%;

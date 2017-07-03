@@ -14,13 +14,13 @@
                             <!--<a class="changeIContainer" href="javascript:void(0)"><i class="iconfont icon-xianshilie changeI"></i></a>-->
                             <!--<a class="changeIContainer" href="javascript:void(0)"><i class="iconfont icon-pingpu changeI"></i></a>-->
                         <!--</div>-->
-                        <el-button-group>
+                        <el-button-group >
                             <el-button @click="changeModel('list')"><i class="iconfont icon-liebiao changeI" ></i></el-button>
                             <el-button @click="changeModel('moreList')"><i class="iconfont icon-xianshilie changeI"></i></el-button>
                             <el-button @click="changeModel('detail')"><i class="iconfont icon-pingpu changeI"></i></el-button>
                         </el-button-group>
-                        <el-input placeholder="搜索数据集／文件夹／图片名" style="width: 20em">
-                            <el-button slot="append" icon="search"></el-button>
+                        <el-input placeholder="搜索数据集／文件夹／图片名" style="width: 20em;">
+                            <el-button slot="append" icon="search" ></el-button>
                         </el-input>
                     </div>
 
@@ -49,6 +49,10 @@
                                                      @change="handleCheckAllChange"></el-checkbox>
                                         <label class="floatleft leftpx" v-if="checkedNum > 0">已选中{{checkedNum}}个文件</label>
                                         <label class="floatleft leftpx" v-else>全选</label>
+                                        <div class="sonTd">名称</div>
+                                        <div class="sonTd">容量</div>
+                                        <div class="sonTd">人数</div>
+                                        <div class="sonTd">创建日期</div>
                                     </div>
                                     <el-checkbox-group v-model="checkedBox" @change="handleCheckedCitiesChange">
                                         <div v-for="piece in firstData" class="sonTr" :id="piece.id">
@@ -74,6 +78,10 @@
                                                      @change="handleCheckAllChange"></el-checkbox>
                                         <label class="floatleft leftpx" v-if="checkedNum > 0">已选中{{checkedNum}}个文件</label>
                                         <label class="floatleft leftpx" v-else>全选</label>
+                                        <div class="sonTd">名称</div>
+                                        <div class="sonTd">容量</div>
+                                        <div class="sonTd">类型</div>
+                                        <div class="sonTd">创建日期</div>
                                     </div>
                                     <el-checkbox-group v-model="checkedBox" @change="handleCheckedCitiesChange">
                                         <div v-for="piece in secondData" class="sonTr" :id="piece.id">
@@ -100,6 +108,10 @@
                                                      @change="handleCheckAllChange"></el-checkbox>
                                         <label class="floatleft leftpx" v-if="checkedNum > 0">已选中{{checkedNum}}个文件</label>
                                         <label class="floatleft leftpx" v-else>全选</label>
+                                        <div class="sonTd">图片名称</div>
+                                        <div class="sonTd">容量</div>
+                                        <div class="sonTd">类型</div>
+                                        <div class="sonTd">创建日期</div>
                                     </div>
                                     <el-checkbox-group v-model="checkedBox" @change="handleCheckedCitiesChange">
                                         <div v-for="piece in thirdData" class="sonTr" :id="piece.id">
@@ -138,11 +150,11 @@
                             </div>
                             <transition :name="transition[1]" appear>
                                 <div v-if="thisLevel === 1" class="levelTr">
-                                    <div v-for="piece in firstData" class="moreListSonTr" :id="piece.id">
+                                    <div v-for="piece in firstData" class="moreListSonTr" @mousedown="mouseOption(thisLevel, piece)" :id="piece.id">
                                         <div class="sonTdFirst">
                                             <img class="smallPic" :src="piece.path" alt="">
                                         </div>
-                                        <div @mousedown="mouseOption(thisLevel, piece)" class="sonsonTr">
+                                        <div  class="sonsonTr">
                                             <div class="sonTd">{{piece.name}}</div>
                                         </div>
                                     </div>
@@ -150,11 +162,11 @@
                             </transition>
                             <transition :name="transition[2]" appear>
                                 <div v-if="thisLevel === 2" class="levelTr" >
-                                    <div v-for="piece in secondData" class="moreListSonTr" :id="piece.id">
+                                    <div v-for="piece in secondData" class="moreListSonTr" @mousedown="mouseOption(thisLevel, piece)" :id="piece.id">
                                         <div class="sonTdFirst">
                                             <img class="smallPic" :src="piece.path" alt="">
                                         </div>
-                                        <div @mousedown="mouseOption(thisLevel, piece)" class="sonsonTr">
+                                        <div  class="sonsonTr">
                                             <div class="sonTd">{{piece.name}}</div>
                                         </div>
                                     </div>
@@ -163,17 +175,72 @@
 
                             <transition :name="transition[3]" appear>
                                 <div v-if="thisLevel === 3" class="levelTr" >
-                                    <div v-for="piece in thirdData" class="moreListSonTr" :id="piece.id">
+                                    <div v-for="piece in thirdData" class="moreListSonTr" @mousedown="mouseOption(thisLevel, piece)" :id="piece.id">
                                         <div class="sonTdFirst">
                                             <img class="smallPic" :src="piece.path" alt="">
                                         </div>
-                                        <div @mousedown="mouseOption(thisLevel, piece)" class="sonsonTr">
+                                        <div  class="sonsonTr">
                                             <div class="sonTd">{{piece.name}}</div>
                                         </div>
                                     </div>
                                 </div>
                             </transition>
                         </div>
+                        </transition>
+                        <transition name="slide-fade" appear>
+                            <div  v-if="whichModel === 'detail'">
+                                <div class="sonTrHead headBar">
+                                    <transition :name="transition[thisLevel]" mode="in-out" appear>
+                                        <div v-if="thisLevel === 1" class="headContent">全部数据</div>
+                                    </transition>
+                                    <transition :name="transition[thisLevel]" mode="in-out" appear>
+                                        <div v-if="thisLevel !== 1" class="headContent">
+                                            <a href="javascript:void(0)" @click="goFront">返回上一级</a>
+                                            |
+                                            <a href="javascript:void(0)" @click="goHead">返回主目录</a>
+                                            |
+                                            <a href="javascript:void(0)" @click="loadMore">加载更多</a>
+                                        </div>
+                                    </transition>
+                                </div>
+                                <transition :name="transition[1]" appear>
+                                    <div v-if="thisLevel === 1" class="levelTr" :key="'detail1'">
+                                        <div v-for="piece in firstData" class="moreListSonTrBr" @mousedown="mouseOption(thisLevel, piece)" :id="piece.id">
+                                            <div class="sonTdBrFirst">
+                                                <img class="smallPicDetail" :src="piece.path" alt="">
+                                            </div>
+                                            <div class="sonsonTrDetail">
+                                                {{piece.name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </transition>
+                                <transition :name="transition[2]" appear>
+                                    <div v-if="thisLevel === 2" class="levelTr" :key="'detail2'">
+                                        <div v-for="piece in secondData" class="moreListSonTrBr" @mousedown="mouseOption(thisLevel, piece)" :id="piece.id">
+                                            <div class="sonTdBrFirst">
+                                                <img class="smallPicDetail" :src="piece.path" alt="">
+                                            </div>
+                                            <div  class="sonsonTrDetail">
+                                                {{piece.name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </transition>
+
+                                <transition :name="transition[3]" appear>
+                                    <div v-if="thisLevel === 3" class="levelTr" :key="'detail3'">
+                                        <div v-for="piece in thirdData" class="moreListSonTrBr" @mousedown="mouseOption(thisLevel, piece)" :id="piece.id">
+                                            <div class="sonTdBrFirst">
+                                                <img class="smallPicDetail" :src="piece.path" alt="">
+                                            </div>
+                                            <div  class="sonsonTrDetail">
+                                                {{piece.name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </transition>
+                            </div>
                         </transition>
                     </div>
 
@@ -196,11 +263,6 @@
     export default {
         data(){
             return {
-                fileName: '脚本文件',
-                pyUploadUrl: '',
-                posttypeUpload: {posttype: 'upload'},
-                fullscreenLoading: false,
-                uploadDisabled: false,
                 //当前所处资源管理的层级
                 thisLevel: 1,
                 //第一层数据
@@ -229,6 +291,12 @@
                 whichModel: 'list',
                 //一行展示几项
                 oneLineNum: 1,
+                //一行的高度
+                oneLineHeight: 44,
+                //不同显示类型单一元素宽度
+                simWidth: [-1, 290, 218],
+                //屏幕宽度
+                clientWidth: 0,
                 //层级过渡动画的class
                 transition: {
                     0: "",
@@ -342,11 +410,22 @@
             	this.whichModel  = model;
             	this.thisLevel = 1;
                 if(model === 'list'){
-                    this.oneLineNum = 1
+                    this.oneLineNum = 1;
+                    this.oneLineHeight = 44;
                 }else if(model === 'moreList'){
-                    this.oneLineNum = 4
+                    if(this.clientWidth > 0){
+                        this.oneLineNum = (this.clientWidth * (5 / 6) - 120) / this.simWidth[1];
+                    }else {
+                        this.oneLineNum = 5;
+                    }
+                    this.oneLineHeight = 44;
                 }else if(model === 'detail'){
-                    this.oneLineNum = 10
+                    if(this.clientWidth > 0){
+                        this.oneLineNum = (this.clientWidth * (5 / 6) - 120) / this.simWidth[2];
+                    }else {
+                        this.oneLineNum = 6;
+                    }
+                    this.oneLineHeight = 188;
                 }
             }
             ,
@@ -371,6 +450,7 @@
                         this.box[this.thisLevel + 1].push(result[keyxz].id);
                     }
                 }
+                this.$refs.viewBox.scrollTop = 0;
 
 //        console.log(this.transition);
 //        console.log(thisLevel);
@@ -465,23 +545,27 @@
             //无限加载之检测篇
             // 首先通过$refs获取dom元素
             this.scrolled = this.$refs.viewBox;
+            console.log("屏幕宽度: " + document.body.clientWidth);
+            this.clientWidth = document.body.clientWidth;
             // 监听这个dom的scroll事件
             this.scrolled.addEventListener('scroll', () => {
-                console.log(document.body.clientHeight);
-                console.log(this.$refs.viewBox.scrollTop);
+                //console.log("滚动条: " + this.$refs.viewBox.scrollTop);
+                //console.log("屏幕高度: " + document.body.clientHeight);
+                //console.log("屏幕宽度: " + document.body.clientWidth);
+                //console.log(this.$refs.viewBox.scrollTop + document.body.clientHeight + ">=" + 44  * this.secondData.length / this.oneLineNum);
                 if (this.thisLevel === 1) {
-                    //滚动条滚动过的距离 + 屏幕高度 >= 内容高度（检测不到，所以用 元素高度 * 元素数量 替代）
-                    if(this.$refs.viewBox.scrollTop + document.body.clientHeight >= 44 * this.firstData.length / this.oneLineNum){
+                    //滚动条滚动过的距离 + 屏幕高度 >= 内容高度（检测不到，所以用 元素高度 * 元素数量 替代）,0.7 表示滚动到到70%就开始请求更多数据
+                    if(this.$refs.viewBox.scrollTop + document.body.clientHeight >= 0.7 * this.oneLineHeight * this.firstData.length / this.oneLineNum){
                         //console.log("load new data");
                         this.loadMore();
                     }
                 } else if (this.thisLevel === 2) {
-                    if(this.$refs.viewBox.scrollTop + document.body.clientHeight >= 44 * this.secondData.length / this.oneLineNum){
+                    if(this.$refs.viewBox.scrollTop + document.body.clientHeight >= 0.7 * this.oneLineHeight * this.secondData.length / this.oneLineNum){
                         //console.log("load new data");
                         this.loadMore();
                     }
                 } else if (this.thisLevel === 3) {
-                    if(this.$refs.viewBox.scrollTop + document.body.clientHeight >= 44 * this.thirdData.length / this.oneLineNum){
+                    if(this.$refs.viewBox.scrollTop + document.body.clientHeight >= 0.7 * this.oneLineHeight * this.thirdData.length / this.oneLineNum){
                         //console.log("load new data");
                         this.loadMore();
                     }
@@ -568,7 +652,7 @@
     .fatherTr {
         width: 100%;
         position: relative;
-        height: 100%;
+        height: 90%;
         //border-top: rgb(242, 246, 253) solid 1px;
         overflow-y: scroll;
         overflow-x: hidden;
@@ -599,6 +683,8 @@
 
     .leftpx {
         margin-left: 10px;
+        padding-right: 15px;
+        color: #78909c;
     }
 
     .sonTr {
@@ -612,7 +698,15 @@
         height: 44px;
         line-height: 44px;
         float: left;
-        width: 25%;
+        width: 290px;
+        /*border-bottom: rgb(242, 246, 253) solid 1px*/
+    }
+    .moreListSonTrBr {
+        /*border: solid 1px blue;*/
+        height: 188px;
+        float: left;
+        width: 150px;
+        padding: 0 49px 0 19px;
         /*border-bottom: rgb(242, 246, 253) solid 1px*/
     }
     .sonTrHead{
@@ -626,6 +720,12 @@
     .sonsonTr {
         height: 44px;
         line-height: 44px;
+        width: 100%;
+    }
+    .sonsonTrDetail {
+        text-align: center;
+        height: 38px;
+        line-height: 38px;
         width: 100%;
     }
 
@@ -668,6 +768,18 @@
         display: inline;
         float: left
     }
+    .sonTdBrFirst {
+        cursor: pointer;
+        /*width: 20%;*/
+        height: 150px;
+        width: 150px;
+    }
+    .sonTdBr {
+        cursor: pointer;
+        width: 20%;
+        display: inline;
+        text-align: center;
+    }
 
     .smallPic {
         width:26px;
@@ -677,7 +789,21 @@
         line-height: 1;
         vertical-align: middle;
     }
-
+    .smallPic {
+        width:26px;
+        height: 26px;
+        margin-left: 10px;
+        margin-top: -1px;
+        line-height: 1;
+        vertical-align: middle;
+    }
+    .smallPicDetail {
+        padding: 10px 10px 10px 10px;
+        width:130px;
+        height: 130px;
+        vertical-align: middle;
+        /*border: solid 1px red;*/
+    }
     .menu {
         position: absolute;
     }

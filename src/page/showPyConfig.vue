@@ -102,22 +102,18 @@
         padding-bottom: 40px;
     }
     .uploader{
-        width: 48%;
+        width: 47%;
         height: 500px;
-        margin-left: 4%;
-        float: left;
+        margin-left: 5%;
         background-color: white;
-        display: block;
+        display: inline-block;
         position: relative;
     }
     .displayer{
-        width: 48%;
-        float: left;
+        width: 47%;
         height: 500px;
-        overflow-y: scroll;
-        overflow-x: scroll;
         background-color: white;
-        display: block;
+        display: inline-block;
         position: relative;
     }
     .upload-demo, .el-upload, .el-upload-dragger{

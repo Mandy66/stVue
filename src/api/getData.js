@@ -3,24 +3,18 @@ import fetch from '@/config/fetch'
 /**
  * 综合获取方法
  */
-export const getInfo = data => fetch('http://192.168.1.194:1234/importData_Intro', data, 'POST', 'fetch', true);
+export const getInfo = data => fetch('http://192.168.1.132:1234/importData_Intro', data, 'POST', 'fetch', true);
 // export const getInfo = data => fetch('http://192.168.1.111:8089/api/getPy.php', data, 'POST', 'fetch', true);
 
 /**
  * .py上传接口
  */
 // export const pyUploadUrl = 'http://192.168.1.111:8089/up/upload.php';
-export const pyUploadUrl = 'http://192.168.1.194:1234/importData_Intro';
-/**
- * 获取.py列表
- */
-
-// export const getPyList = data => fetch('http://192.168.1.111:8089/api/getPy.php', data, 'POST', 'fetch', true);
-export const getPyList = data => fetch('http://192.168.1.194:1234/importData_Intro', data, 'POST', 'fetch', true);
+export const pyUploadUrl = 'http://192.168.1.132:1234/importData_Intro';
 /**
  * 获取用户的信息
  */
-export const getLogin = data => fetch('http://192.168.1.194:1234/login',  data, 'POST', 'fetch', true);
+export const getLogin = data => fetch('http://192.168.1.132:1234/login',  data, 'POST', 'fetch', true);
 
 /**
  * 获取数据集列表
@@ -30,11 +24,6 @@ export const getFileInfo = data => fetch('http://192.168.1.111:8089/fileManage.p
 
 
 
-/**
- * 获取.py数量
- */
-
-export const getPyCount = data => fetch('http://192.168.1.111:8089/api/getPy.php', data, 'POST', 'fetch', true);
 
 /**
  * 登陆
